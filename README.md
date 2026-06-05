@@ -276,13 +276,10 @@ python main.py --env_name=walker2d-medium-v2 --agent.drift_temp=0.1 --agent.alph
 If you find this work useful, please cite:
 
 ```bibtex
-@misc{houssaini2026driftqlearning,
-      title={Drift Q-Learning},
-      author={Anas Houssaini and Mohamad H. Danesh and Amin Abyaneh and Scott Fujimoto and Hsiu-Chin Lin and David Meger},
-      year={2026},
-      eprint={2606.00350},
-      archivePrefix={arXiv},
-      primaryClass={cs.LG},
-      url={https://arxiv.org/abs/2606.00350},
+@article{houssaini2026drift,
+  title={Drift Q-Learning},
+  author={Houssaini, Anas and Danesh, Mohamad H and Abyaneh, Amin and Fujimoto, Scott and Lin, Hsiu-Chin and Meger, David},
+  journal={arXiv preprint arXiv:2606.00350},
+  year={2026}
 }
 ```
