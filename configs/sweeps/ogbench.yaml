@@ -1,0 +1,72 @@
+# wandb sweep for DriftQL: driftql-ogbench
+# Launch:  wandb sweep configs/sweeps/ogbench.yaml
+# Then:    wandb agent <entity>/driftql/<sweep_id>
+# Grid over 50 task configs x 5 seeds = 250 runs.
+program: main.py
+method: grid
+name: driftql-ogbench
+metric:
+  name: evaluation/success
+  goal: maximize
+parameters:
+  run_group:
+    value: driftql-ogbench
+  config_path:
+    values:
+      - configs/ogbench/humanoidmaze-medium-navigate-task1.yaml
+      - configs/ogbench/humanoidmaze-medium-navigate-task2.yaml
+      - configs/ogbench/humanoidmaze-medium-navigate-task3.yaml
+      - configs/ogbench/humanoidmaze-medium-navigate-task4.yaml
+      - configs/ogbench/humanoidmaze-medium-navigate-task5.yaml
+      - configs/ogbench/humanoidmaze-large-navigate-task1.yaml
+      - configs/ogbench/humanoidmaze-large-navigate-task2.yaml
+      - configs/ogbench/humanoidmaze-large-navigate-task3.yaml
+      - configs/ogbench/humanoidmaze-large-navigate-task4.yaml
+      - configs/ogbench/humanoidmaze-large-navigate-task5.yaml
+      - configs/ogbench/antmaze-large-navigate-task1.yaml
+      - configs/ogbench/antmaze-large-navigate-task2.yaml
+      - configs/ogbench/antmaze-large-navigate-task3.yaml
+      - configs/ogbench/antmaze-large-navigate-task4.yaml
+      - configs/ogbench/antmaze-large-navigate-task5.yaml
+      - configs/ogbench/antmaze-giant-navigate-task1.yaml
+      - configs/ogbench/antmaze-giant-navigate-task2.yaml
+      - configs/ogbench/antmaze-giant-navigate-task3.yaml
+      - configs/ogbench/antmaze-giant-navigate-task4.yaml
+      - configs/ogbench/antmaze-giant-navigate-task5.yaml
+      - configs/ogbench/antsoccer-arena-navigate-task1.yaml
+      - configs/ogbench/antsoccer-arena-navigate-task2.yaml
+      - configs/ogbench/antsoccer-arena-navigate-task3.yaml
+      - configs/ogbench/antsoccer-arena-navigate-task4.yaml
+      - configs/ogbench/antsoccer-arena-navigate-task5.yaml
+      - configs/ogbench/cube-single-play-task1.yaml
+      - configs/ogbench/cube-single-play-task2.yaml
+      - configs/ogbench/cube-single-play-task3.yaml
+      - configs/ogbench/cube-single-play-task4.yaml
+      - configs/ogbench/cube-single-play-task5.yaml
+      - configs/ogbench/cube-double-play-task1.yaml
+      - configs/ogbench/cube-double-play-task2.yaml
+      - configs/ogbench/cube-double-play-task3.yaml
+      - configs/ogbench/cube-double-play-task4.yaml
+      - configs/ogbench/cube-double-play-task5.yaml
+      - configs/ogbench/scene-play-task1.yaml
+      - configs/ogbench/scene-play-task2.yaml
+      - configs/ogbench/scene-play-task3.yaml
+      - configs/ogbench/scene-play-task4.yaml
+      - configs/ogbench/scene-play-task5.yaml
+      - configs/ogbench/puzzle-3x3-play-task1.yaml
+      - configs/ogbench/puzzle-3x3-play-task2.yaml
+      - configs/ogbench/puzzle-3x3-play-task3.yaml
+      - configs/ogbench/puzzle-3x3-play-task4.yaml
+      - configs/ogbench/puzzle-3x3-play-task5.yaml
+      - configs/ogbench/puzzle-4x4-play-task1.yaml
+      - configs/ogbench/puzzle-4x4-play-task2.yaml
+      - configs/ogbench/puzzle-4x4-play-task3.yaml
+      - configs/ogbench/puzzle-4x4-play-task4.yaml
+      - configs/ogbench/puzzle-4x4-play-task5.yaml
+  seed:
+    values: [10, 11, 12, 13, 14]
+command:
+  - ${env}
+  - python3
+  - ${program}
+  - ${args}

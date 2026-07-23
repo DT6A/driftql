@@ -9,6 +9,7 @@ import jax
 import numpy as np
 import tqdm
 import wandb
+import yaml
 from absl import app, flags
 from ml_collections import config_flags
 
@@ -21,6 +22,13 @@ from utils.log_utils import CsvLogger, get_exp_name, get_flag_dict, get_wandb_vi
 
 FLAGS = flags.FLAGS
 
+flags.DEFINE_string(
+    'config_path',
+    None,
+    'Optional path to a YAML config file with run + agent settings. '
+    'Top-level keys map to flags (e.g. env_name, eval_episodes); an "agent" mapping overrides '
+    'agent hyperparameters. Flags passed explicitly on the command line take precedence.',
+)
 flags.DEFINE_string('run_group', 'Debug', 'Run group.')
 flags.DEFINE_integer('seed', 0, 'Random seed.')
 flags.DEFINE_string('env_name', 'cube-double-play-singletask-v0', 'Environment (dataset) name.')
@@ -52,7 +60,40 @@ flags.DEFINE_integer('balanced_sampling', 0, 'Whether to use balanced sampling f
 config_flags.DEFINE_config_file('agent', 'agents/driftql.py', lock_config=False)
 
 
+def apply_config_file(path):
+    """Apply settings from a YAML config file to FLAGS.
+
+    Top-level keys are treated as flags (e.g. ``env_name``, ``eval_episodes``). A nested
+    ``agent`` mapping overrides individual agent hyperparameters. Flags that were passed
+    explicitly on the command line always take precedence over the config file, so a single
+    config can be reused across seeds/run groups supplied via the CLI (e.g. by a wandb sweep).
+    """
+    with open(path, 'r') as f:
+        cfg = yaml.safe_load(f) or {}
+
+    agent_overrides = cfg.pop('agent', None) or {}
+
+    for key, value in cfg.items():
+        if key not in FLAGS:
+            raise ValueError(f'Unknown flag "{key}" in config file {path}.')
+        # Command-line flags win over the config file.
+        if not FLAGS[key].present:
+            setattr(FLAGS, key, value)
+
+    for key, value in agent_overrides.items():
+        if key not in FLAGS.agent:
+            raise ValueError(f'Unknown agent hyperparameter "{key}" in config file {path}.')
+        current = FLAGS.agent[key]
+        # Preserve the field's type (ConfigDict is type-safe): promote ints to floats when needed.
+        if isinstance(current, float) and isinstance(value, int):
+            value = float(value)
+        FLAGS.agent[key] = value
+
+
 def main(_):
+    if FLAGS.config_path is not None:
+        apply_config_file(FLAGS.config_path)
+
     # Set up logger.
     exp_name = get_exp_name(FLAGS.seed)
     setup_wandb(project='driftql', group=FLAGS.run_group, name=exp_name)

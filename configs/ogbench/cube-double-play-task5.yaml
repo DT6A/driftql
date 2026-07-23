@@ -1,0 +1,10 @@
+# Auto-generated DriftQL run config. Use: python3 main.py --config_path=<this file>
+env_name: cube-double-play-singletask-task5-v0
+eval_episodes: 50
+agent:
+  drift_temp: 0.2
+  drift_ngen: 4
+  noise_dim: 8
+  alpha: 100.0
+  q_agg: mean
+  kernel: gaussian

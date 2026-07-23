@@ -1,0 +1,7 @@
+# Auto-generated DriftQL run config. Use: python3 main.py --config_path=<this file>
+env_name: antmaze-large-navigate-singletask-task5-v0
+eval_episodes: 50
+agent:
+  drift_temp: 0.5
+  alpha: 10.0
+  q_agg: mean

@@ -1,0 +1,6 @@
+# Auto-generated DriftQL run config. Use: python3 main.py --config_path=<this file>
+env_name: pen-expert-v1
+eval_episodes: 10
+agent:
+  drift_temp: 0.9
+  alpha: 2000.0

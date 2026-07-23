@@ -1,0 +1,7 @@
+# Auto-generated DriftQL run config. Use: python3 main.py --config_path=<this file>
+env_name: antmaze-umaze-diverse-v2
+eval_episodes: 100
+agent:
+  drift_temp: 0.5
+  alpha: 12.0
+  q_agg: mean

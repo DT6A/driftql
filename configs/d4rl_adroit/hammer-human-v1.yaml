@@ -1,0 +1,8 @@
+# Auto-generated DriftQL run config. Use: python3 main.py --config_path=<this file>
+env_name: hammer-human-v1
+eval_episodes: 10
+agent:
+  drift_temp: 0.05
+  alpha: 2500.0
+  discount: 0.995
+  q_agg: mean

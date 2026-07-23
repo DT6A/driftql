@@ -1,0 +1,7 @@
+# Auto-generated DriftQL run config. Use: python3 main.py --config_path=<this file>
+env_name: puzzle-3x3-play-singletask-task2-v0
+eval_episodes: 50
+agent:
+  drift_temp: 0.5
+  alpha: 50.0
+  kernel: gaussian

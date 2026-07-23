@@ -1,0 +1,28 @@
+# wandb sweep for DriftQL: driftql-d4rl-antmaze
+# Launch:  wandb sweep configs/sweeps/d4rl_antmaze.yaml
+# Then:    wandb agent <entity>/driftql/<sweep_id>
+# Grid over 6 task configs x 10 seeds = 60 runs.
+program: main.py
+method: grid
+name: driftql-d4rl-antmaze
+metric:
+  name: evaluation/success
+  goal: maximize
+parameters:
+  run_group:
+    value: driftql-d4rl-antmaze
+  config_path:
+    values:
+      - configs/d4rl_antmaze/antmaze-large-play-v2.yaml
+      - configs/d4rl_antmaze/antmaze-medium-diverse-v2.yaml
+      - configs/d4rl_antmaze/antmaze-medium-play-v2.yaml
+      - configs/d4rl_antmaze/antmaze-umaze-diverse-v2.yaml
+      - configs/d4rl_antmaze/antmaze-umaze-v2.yaml
+      - configs/d4rl_antmaze/antmaze-large-diverse-v2.yaml
+  seed:
+    values: [10, 11, 12, 13, 14, 15, 16, 17, 18, 19]
+command:
+  - ${env}
+  - python3
+  - ${program}
+  - ${args}

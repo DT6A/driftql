@@ -1,0 +1,8 @@
+# Auto-generated DriftQL run config. Use: python3 main.py --config_path=<this file>
+env_name: scene-play-singletask-task2-v0
+eval_episodes: 50
+agent:
+  drift_temp: 0.2
+  alpha: 250.0
+  discount: 0.995
+  kernel: gaussian

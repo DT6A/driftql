@@ -1,0 +1,34 @@
+# wandb sweep for DriftQL: driftql-d4rl-adroit
+# Launch:  wandb sweep configs/sweeps/d4rl_adroit.yaml
+# Then:    wandb agent <entity>/driftql/<sweep_id>
+# Grid over 12 task configs x 10 seeds = 120 runs.
+program: main.py
+method: grid
+name: driftql-d4rl-adroit
+metric:
+  name: evaluation/episode.return
+  goal: maximize
+parameters:
+  run_group:
+    value: driftql-d4rl-adroit
+  config_path:
+    values:
+      - configs/d4rl_adroit/door-cloned-v1.yaml
+      - configs/d4rl_adroit/door-expert-v1.yaml
+      - configs/d4rl_adroit/door-human-v1.yaml
+      - configs/d4rl_adroit/hammer-cloned-v1.yaml
+      - configs/d4rl_adroit/hammer-expert-v1.yaml
+      - configs/d4rl_adroit/hammer-human-v1.yaml
+      - configs/d4rl_adroit/pen-cloned-v1.yaml
+      - configs/d4rl_adroit/pen-expert-v1.yaml
+      - configs/d4rl_adroit/pen-human-v1.yaml
+      - configs/d4rl_adroit/relocate-cloned-v1.yaml
+      - configs/d4rl_adroit/relocate-expert-v1.yaml
+      - configs/d4rl_adroit/relocate-human-v1.yaml
+  seed:
+    values: [10, 11, 12, 13, 14, 15, 16, 17, 18, 19]
+command:
+  - ${env}
+  - python3
+  - ${program}
+  - ${args}

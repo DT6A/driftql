@@ -91,6 +91,33 @@ entries in `get_config()`; any hyperparameter not shown keeps its default (e.g. 
 `noise_dim=action_dim`). Add `--seed=<n>` to change the random seed. For the OGBench suites we report
 over five singletask variants (`task1`–`task5`), all listed explicitly.
 
+### Config files & W&B sweeps
+
+Instead of passing every flag by hand, you can point `main.py` at a YAML config that bundles the
+`env_name`, `eval_episodes`, and the `--agent.*` overrides for a task:
+
+```bash
+python3 main.py --config_path=configs/ogbench/antmaze-large-navigate-task1.yaml
+```
+
+Flags passed on the command line still win over the file (e.g. `--seed=3`), so a single config is
+reused across seeds. Ready-made configs live under `configs/{ogbench,d4rl_antmaze,d4rl_adroit}/`
+(one per task, hyperparameters taken from the tables below).
+
+Three [W&B sweeps](https://docs.wandb.ai/guides/sweeps) reproduce the full result set as grids over
+`(config_path × seed)`:
+
+| Sweep | File | Tasks × seeds | Eval episodes | Runs |
+| --- | --- | --- | --- | --- |
+| OGBench | `configs/sweeps/ogbench.yaml` | 50 × 5 | 50 | 250 |
+| D4RL AntMaze | `configs/sweeps/d4rl_antmaze.yaml` | 6 × 10 | 100 | 60 |
+| D4RL Adroit | `configs/sweeps/d4rl_adroit.yaml` | 12 × 10 | 10 | 120 |
+
+```bash
+wandb sweep configs/sweeps/ogbench.yaml       # prints a sweep id
+wandb agent <entity>/driftql/<sweep_id>        # run agents (repeat/parallelize as needed)
+```
+
 <details>
 <summary><b>OGBench</b></summary>
 

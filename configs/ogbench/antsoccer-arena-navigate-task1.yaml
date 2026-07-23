@@ -1,0 +1,8 @@
+# Auto-generated DriftQL run config. Use: python3 main.py --config_path=<this file>
+env_name: antsoccer-arena-navigate-singletask-task1-v0
+eval_episodes: 50
+agent:
+  drift_temp: 0.5
+  alpha: 10.0
+  discount: 0.995
+  q_agg: mean
